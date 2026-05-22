@@ -1,13 +1,14 @@
 // Online C++ compiler to run C++ program online
 #include <iostream>
 #include <vector>
+#include <queue>
 using namespace std;
 
 int main()
 {
     int n, m;
     cin >> n >> m;
-    
+
     vector<int> adj[n + 1];
     for (int i = 0; i < m; i++)
     {
@@ -17,14 +18,25 @@ int main()
         adj[v].push_back(u);
     }
 
-    for (auto it : adj)
+    queue<int> q;
+    vector<int> v(n + 1, 0);
+
+    q.push(1);
+    v[1] = 1;
+    while (!q.empty())
     {
 
-        for (auto item : it)
+        int node = q.front();
+        q.pop();
+        cout << node;
+        for (auto it : adj[node])
         {
-            cout << item << " ";
+            if (!v[it])
+            {
+                q.push(it);
+                v[it] = 1;
+            }
         }
-        cout << "\n";
     }
 
     return 0;
